@@ -25,7 +25,7 @@ resource "proxmox_virtual_environment_vm" "debian_template" {
 
   disk {
     datastore_id = var.lvm_id
-    file_id      = proxmox_virtual_environment_download_file.debian_cloud_image.id
+    file_id      = proxmox_download_file.debian_cloud_image.id
     interface    = "virtio0"
     iothread     = true
     discard      = "on"
@@ -47,7 +47,7 @@ resource "proxmox_virtual_environment_vm" "debian_template" {
   }
 }
 
-resource "proxmox_virtual_environment_download_file" "debian_cloud_image" {
+resource "proxmox_download_file" "debian_cloud_image" {
   content_type = "iso"
   datastore_id = var.storage_id
   node_name    = var.ve_node_name

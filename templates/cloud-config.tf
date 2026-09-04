@@ -7,10 +7,10 @@ resource "proxmox_virtual_environment_file" "user_data_cloud_config" {
     data = <<-EOF
     #cloud-config
     hostname: test_debian
-    timezone: Europe/Berlin
+    timezone: UTC
     users:
       - default
-      - name: debian
+      - name: ansible
         groups:
           - sudo
         shell: /bin/bash

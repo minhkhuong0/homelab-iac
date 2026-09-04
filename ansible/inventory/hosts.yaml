@@ -1,0 +1,4 @@
+network:
+  hosts:
+    dns:
+      ansible_host: 10.42.0.2

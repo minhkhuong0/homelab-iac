@@ -1,4 +1,8 @@
 network:
   hosts:
-    dns:
+    dns_host:
       ansible_host: 10.42.0.2
+
+docker:
+  children:
+    dns_host:

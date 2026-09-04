@@ -1,0 +1,9 @@
+- name: Baseline cofig
+  hosts: all
+  roles:
+    - common
+
+- name: Install docker
+  hosts: docker
+  roles:
+    - common

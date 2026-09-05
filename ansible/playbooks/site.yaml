@@ -6,4 +6,4 @@
 - name: Install docker
   hosts: docker
   roles:
-    - common
+    - docker

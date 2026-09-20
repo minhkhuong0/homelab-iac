@@ -1,13 +1,17 @@
 {
-  inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-  inputs.disko.url = "github:nix-community/disko";
-  inputs.disko.inputs.nixpkgs.follows = "nixpkgs";
-  inputs.nixos-facter-modules.url = "github:numtide/nixos-facter-modules";
+  inputs = { 
+    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    disko.url = "github:nix-community/disko";
+    disko.inputs.nixpkgs.follows = "nixpkgs";
+    colmena.url = "github:zhaofengli/colmena";
+  };
 
   outputs =
     {
+      self,
       nixpkgs,
       disko,
+      colmena,
       ...
     }:
     {
@@ -22,23 +26,26 @@
         ];
       };
 
+      colmenaHive = colmena.lib.makeHive self.outputs.colmena;
       colmena = {
         meta = {
-          nixpgs = import nixpkgs { system = "x86_64-linux"; };
+          nixpkgs = import nixpkgs { system = "x86_64-linux"; };
 
           specialArgs = {
-            inherit nixpkgs;
+            inherit nixpkgs disko;
           };
         };
 
-        "bastion" = { name, nodes, ... }: {
-          deployment.targetHost = "10.42.0.114";
+        bastion = { name, nodes, ... }: {
+          deployment.targetHost = "10.42.0.2";
           deployment.targetUser = "root";
+
+          imports = [
+            disko.nixosModules.disko
+            ./hosts/bastion/configuration.nix
+          ];
         };
 
-        imports = [
-          ./hosts/bastion/configuration.nix
-        ];
       };
     };
 }

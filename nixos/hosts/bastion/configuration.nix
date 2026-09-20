@@ -18,9 +18,26 @@
   };
   services.openssh.enable = true;
 
-  environment.systemPackages = map lib.lowPrio [
-    pkgs.curl
-    pkgs.gitMinimal
+  networking = {
+    interfaces.enp6s0.ipv4.addresses = [
+      {
+        address = "10.42.0.2";
+        prefixLength = 24;
+      }
+    ];
+    defaultGateway = "10.42.0.1";
+    useDHCP = false;
+    hostName = "bastion";
+
+    firewall.allowedUDPPorts = [ 53 ];
+  };
+
+  environment.systemPackages = with pkgs; map lib.lowPrio [
+    curl
+    git
+    wget
+    dig
+    vim
   ];
 
   users.users.root.openssh.authorizedKeys.keys =
@@ -29,4 +46,15 @@
   ];
 
   system.stateVersion = "26.05";
+
+  services = {
+    unbound = {
+      enable = true;
+
+      settings.server = {
+        interface = [ "10.42.0.2" "127.0.0.1" ];
+        access-control = [ "10.42.0.0/24 allow" ];
+      };
+    };
+  };
 }

@@ -54,6 +54,12 @@
       settings.server = {
         interface = [ "10.42.0.2" "127.0.0.1" ];
         access-control = [ "10.42.0.0/24 allow" ];
+
+        serve-expired = true;
+
+        rrset-cache-size = "100m";
+        msg-cache-size = "50m";
+        infra-cache-numhosts = 10000;
       };
     };
   };

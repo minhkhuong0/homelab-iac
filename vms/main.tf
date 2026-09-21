@@ -5,10 +5,11 @@ data "terraform_remote_state" "templates" {
     path = "../templates/terraform.tfstate"
   }
 }
-resource "proxmox_virtual_environment_vm" "dns_server" {
+resource "proxmox_virtual_environment_vm" "k3s_server" {
   name      = "dns-server"
   node_name = var.ve_node_name
-  vm_id     = 100 # TODO:change later to 102
+  # vm_id     = 100 # TODO:change later to 102
+  count = 3
 
   clone {
     vm_id = data.terraform_remote_state.templates.outputs.debian_template_vm_id

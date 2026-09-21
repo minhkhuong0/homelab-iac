@@ -30,6 +30,8 @@
     hostName = "bastion";
 
     firewall.allowedUDPPorts = [ 53 ];
+    firewall.allowedTCPPorts = [ 80 443 ];
+
   };
 
   environment.systemPackages = with pkgs; map lib.lowPrio [
@@ -48,19 +50,45 @@
   system.stateVersion = "26.05";
 
   services = {
-    unbound = {
+    coredns = {
       enable = true;
 
-      settings.server = {
-        interface = [ "10.42.0.2" "127.0.0.1" ];
-        access-control = [ "10.42.0.0/24 allow" ];
+      config = ''
+        nhmk.de {
+          hosts {
+            10.42.0.2 *.nhmk.de
+            fallthrough nhmk.de
+          }
+          forward . 9.9.9.9 149.112.112.112
+        }
+        pangolin.nhmk.de {
+          forward . 9.9.9.9 149.112.112.112
+        }
+        www.nhmk.de {
+          forward . 9.9.9.9 149.112.112.112
+        }
+        . {
+          forward . 9.9.9.9 149.112.112.112
+        }
+      '';
+    };
 
-        serve-expired = true;
+    nginx = {
+      enable = true;
+      recommendedProxySettings = true;
+      recommendedTlsSettings = true;
 
-        rrset-cache-size = "100m";
-        msg-cache-size = "50m";
-        infra-cache-numhosts = 10000;
+      virtualHosts."10.42.0.2" = {
+        enableACME = true;
+        forceSSL = true;
+        locations."/" = {
+          proxyPass = "http://10.42.0.195:8096";
+        };
       };
     };
+  };
+
+  security.acme = {
+    acceptTerms = true;
   };
 }

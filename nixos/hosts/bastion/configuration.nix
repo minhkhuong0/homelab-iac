@@ -45,6 +45,7 @@
   users.users.root.openssh.authorizedKeys.keys =
   [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMQ0V3fwQjXLr6guvAVp8Wg4b0MfyUVwtkDeVqmUOzvt homelab-terraform"
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGQjagqJws0x7rwOF+LaLLdaFbLS6xvTx5r86u152HdG khuong laptop"
   ];
 
   system.stateVersion = "26.05";

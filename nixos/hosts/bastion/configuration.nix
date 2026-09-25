@@ -67,6 +67,9 @@
         www.nhmk.de {
           forward . 9.9.9.9 149.112.112.112
         }
+        livesync.nhmk.de {
+          forward . 9.9.9.9 149.112.112.112
+        }
         . {
           forward . 9.9.9.9 149.112.112.112
         }
@@ -78,11 +81,19 @@
       recommendedProxySettings = true;
       recommendedTlsSettings = true;
 
-      virtualHosts."10.42.0.2" = {
+      virtualHosts."jellyfin.nhmk.de" = {
         enableACME = true;
         forceSSL = true;
         locations."/" = {
           proxyPass = "http://10.42.0.195:8096";
+        };
+      };
+
+      virtualHosts."livesync.nhmk.de" = {
+        enableACME = true;
+        forceSSL = true;
+        locations."/" = {
+          proxyPass = "http://10.42.0.120:5984";
         };
       };
     };

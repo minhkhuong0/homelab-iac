@@ -52,6 +52,6 @@ resource "proxmox_download_file" "debian_cloud_image" {
   datastore_id = var.storage_id
   node_name    = var.ve_node_name
 
-  url       = "https://cloud.debian.org/images/cloud/trixie/latest/debian-13-generic-amd64.qcow2"
+  url       = "https://ftp5.gwdg.de/pub/linux/debian/debian-cloud-image/cloud/trixie/latest/debian-13-genericcloud-amd64.qcow2"
   file_name = "debian-13-generic-amd64.img"
 }

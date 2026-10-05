@@ -5,31 +5,46 @@ data "terraform_remote_state" "templates" {
     path = "../templates/terraform.tfstate"
   }
 }
+
+locals {
+  k3s_defaults = {
+    vm_id = data.terraform_remote_state.templates.outputs.debian_template_vm_id
+  }
+  k3s_servers = {
+    for name, server in var.k3s_servers:
+      name => merge(local.k3s_defaults, server)
+  }
+}
+
 resource "proxmox_virtual_environment_vm" "k3s_server" {
-  name      = "dns-server"
-  node_name = var.ve_node_name
-  # vm_id     = 100 # TODO:change later to 102
-  count = 3
+  for_each = var.k3s_servers
+
+  name      = each.key
+  node_name = each.value.node_name
 
   clone {
-    vm_id = data.terraform_remote_state.templates.outputs.debian_template_vm_id
+    vm_id = each.value.vm_id
   }
 
   agent {
     enabled = true
   }
 
+  cpu {
+    cores = each.value.cpu
+  }
+
   memory {
-    dedicated = 1024
+    dedicated = each.value.memory
   }
 
   initialization {
     dns {
-      servers = ["10.42.0.1"]
+      servers = ["10.42.0.2"]
     }
     ip_config {
       ipv4 {
-        address = "10.42.0.2/24"
+        address = each.value.ip
         gateway = "10.42.0.1"
       }
     }

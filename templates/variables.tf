@@ -14,16 +14,19 @@ variable "ve_api_token" {
 }
 
 variable "ve_node_name" {
-  description = "datastore id for vms"
+  description = "node to provision template"
   type        = string
+  default = "pve"
 }
 
 variable "lvm_id" {
   description = "datastore id for vms"
   type        = string
+  default = "local-lvm"
 }
 
 variable "storage_id" {
   description = "datastore id for storage"
   type        = string
+  default = "local"
 }

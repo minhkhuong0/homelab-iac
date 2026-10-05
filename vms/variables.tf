@@ -27,3 +27,13 @@ variable "storage_id" {
   description = "datastore id for storage"
   type        = string
 }
+
+variable "k3s_servers" {
+  type = map(object({
+    node_name = string
+    vm_id = optional(number, 9000)
+    memory = number
+    cpu = number
+    ip = string
+  }))
+}

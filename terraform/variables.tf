@@ -13,12 +13,6 @@ variable "ve_api_token" {
   type        = string
 }
 
-variable "ve_node_name" {
-  description = "node to provision template"
-  type        = string
-  default = "pve"
-}
-
 variable "lvm_id" {
   description = "datastore id for vms"
   type        = string
@@ -29,4 +23,14 @@ variable "storage_id" {
   description = "datastore id for storage"
   type        = string
   default = "local"
+}
+
+variable "k3s_servers" {
+  type = map(object({
+    node_name = string
+    vm_id = optional(number, 9000)
+    memory = number
+    cpu = number
+    ip = string
+  }))
 }

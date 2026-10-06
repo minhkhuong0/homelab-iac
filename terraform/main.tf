@@ -1,22 +1,7 @@
-data "terraform_remote_state" "templates" {
-  backend = "local"
-
-  config = {
-    path = "../templates/terraform.tfstate"
-  }
-}
-
-locals {
-  k3s_defaults = {
-    vm_id = data.terraform_remote_state.templates.outputs.debian_template_vm_id
-  }
-  k3s_servers = {
-    for name, server in var.k3s_servers:
-      name => merge(local.k3s_defaults, server)
-  }
-}
-
 resource "proxmox_virtual_environment_vm" "k3s_server" {
+  depends_on = [
+    proxmox_virtual_environment_vm.debian_template
+  ]
   for_each = var.k3s_servers
 
   name      = each.key

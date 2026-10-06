@@ -1,13 +1,3 @@
-# variable "ve_username" {
-#   description = "username for Proxmox VE"
-#   type        = string
-# }
-#
-# variable "ve_password" {
-#   description = "password for Proxmox VE"
-#   type        = string
-# }
-
 variable "ve_api_token" {
   description = "api token for Prxmox VE"
   type        = string
@@ -33,4 +23,8 @@ variable "k3s_servers" {
     cpu = number
     ip = string
   }))
+}
+
+variable "ve_nodes" {
+  type = map
 }

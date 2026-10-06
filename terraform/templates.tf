@@ -1,15 +1,9 @@
-locals {
-  nodes = toset([
-    for k, v in var.k3s_servers:
-      v.node_name
-  ])
-}
 resource "proxmox_virtual_environment_vm" "debian_template" {
-  for_each = local.nodes
+  for_each = var.ve_nodes
 
   name      = "debian-template"
-  node_name = each.value
-  vm_id     = 9000
+  node_name = each.key
+  vm_id     = each.value
 
   template = true
   started  = false
@@ -56,22 +50,22 @@ resource "proxmox_virtual_environment_vm" "debian_template" {
 }
 
 resource "proxmox_download_file" "debian_cloud_image" {
-  for_each = local.nodes
+  for_each = var.ve_nodes
 
   content_type = "iso"
   datastore_id = var.storage_id
-  node_name    = each.value
+  node_name    = each.key
 
   url       = "https://ftp5.gwdg.de/pub/linux/debian/debian-cloud-image/cloud/trixie/latest/debian-13-generic-amd64.qcow2"
   file_name = "debian-13-generic-amd64.img"
 }
 
 resource "proxmox_virtual_environment_file" "user_data_cloud_config" {
-  for_each = local.nodes
+  for_each = var.ve_nodes
   
   content_type = "snippets"
   datastore_id = var.storage_id
-  node_name    = each.value
+  node_name    = each.key
 
   source_raw {
     data = <<-EOF

@@ -1,14 +1,11 @@
 resource "proxmox_virtual_environment_vm" "k3s_server" {
-  depends_on = [
-    proxmox_virtual_environment_vm.debian_template
-  ]
   for_each = var.k3s_servers
 
   name      = each.key
   node_name = each.value.node_name
 
   clone {
-    vm_id = each.value.vm_id
+    vm_id = proxmox_virtual_environment_vm.debian_template[each.value.node_name].vm_id
   }
 
   agent {

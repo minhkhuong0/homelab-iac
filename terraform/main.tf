@@ -8,7 +8,8 @@ resource "proxmox_virtual_environment_vm" "k3s_server" {
   node_name = each.value.node_name
 
   clone {
-    vm_id = each.value.vm_id
+    vm_id = each.value.template_vm_id
+    node_name = var.template_node
   }
 
   agent {

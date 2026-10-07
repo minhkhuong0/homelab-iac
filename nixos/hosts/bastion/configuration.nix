@@ -52,10 +52,12 @@
   users.users = {
     root.openssh.authorizedKeys.keys = [
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGQjagqJws0x7rwOF+LaLLdaFbLS6xvTx5r86u152HdG khuong laptop"
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHXL3qwxZvMpfJyt/ojv3fyLsynCkjm4BNu+l907LrT0 khuong desktop"
       ];
     "deploy" = {
       openssh.authorizedKeys.keys = [
           "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGQjagqJws0x7rwOF+LaLLdaFbLS6xvTx5r86u152HdG khuong laptop"
+          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHXL3qwxZvMpfJyt/ojv3fyLsynCkjm4BNu+l907LrT0 khuong desktop"
         ];
       isNormalUser = true;
       description = "Deploy terraform and ansible to cluster";

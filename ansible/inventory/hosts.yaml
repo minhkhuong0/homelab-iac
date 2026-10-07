@@ -1,8 +1,4 @@
-network:
+k3s:
   hosts:
-    dns_host:
-      ansible_host: 10.42.0.2
-
-docker:
-  hosts:
-    dns_host:
+    10.42.0.80:
+    10.42.0.82:

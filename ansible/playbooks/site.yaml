@@ -2,8 +2,3 @@
   hosts: all
   roles:
     - common
-
-- name: Install docker
-  hosts: docker
-  roles:
-    - docker

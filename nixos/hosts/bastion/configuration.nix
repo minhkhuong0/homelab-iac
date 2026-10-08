@@ -103,6 +103,21 @@
       recommendedProxySettings = true;
       recommendedTlsSettings = true;
 
+      streamConfig = ''
+        upstream k3s_servers {
+          server 10.42.0.80:6443;
+          server 10.42.0.81:6443;
+          server 10.42.0.82:6443;
+          server 10.42.0.83:6443;
+          server 10.42.0.84:6443;
+        }
+
+        server {
+          listen 6443;
+          proxy_pass k3s_servers;
+        }
+      '';
+
       virtualHosts."jellyfin.nhmk.de" = {
         enableACME = true;
         forceSSL = true;

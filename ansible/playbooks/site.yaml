@@ -2,3 +2,7 @@
   hosts: all
   roles:
     - common
+- name: K3s config
+  hosts: k3s_servers
+  roles:
+    - k3s_server

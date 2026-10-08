@@ -1,4 +1,12 @@
-k3s:
+k3s_servers:
   hosts:
-    10.42.0.80:
-    10.42.0.82:
+    k3s-server-0:
+      ansible_host: 10.42.0.80
+    k3s-server-1:
+      ansible_host: 10.42.0.81
+    k3s-server-2:
+      ansible_host: 10.42.0.82
+    k3s-server-3:
+      ansible_host: 10.42.0.83
+    k3s-server-4:
+      ansible_host: 10.42.0.84

@@ -1,0 +1,31 @@
+---
+- name: Get k3s installed version
+  ansible.builtin.command: k3s --version
+  register: k3s_server_version_output
+  changed_when: false
+  #failed_when: k3s_server_version_output.rc != 0
+  failed_when: false
+
+- name: Download script
+  when:
+    k3s_server_version_output.rc != 0
+  ansible.builtin.get_url:
+    url: https://get.k3s.io/
+    timeout: 120
+    dest: /tmp/k3s-install.sh
+    mode: "0755"
+
+- name: Run install script on first server
+  when:
+    - k3s_server_version_output.rc != 0
+    - inventory_hostname == groups["k3s_servers"][0]
+  ansible.builtin.command:
+    argv:
+      - /tmp/k3s-install.sh
+      - -s
+      - "-"
+      - server
+      - --cluster-init
+      - --tls-san="{{ control_lb_ip }}"
+      - --cluster-cidr "{{ cluster_cidr }}"
+      - --node-name "{{ inventory_hostname }}"

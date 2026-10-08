@@ -15,14 +15,13 @@ variable "storage_id" {
   default = "local"
 }
 
-variable "vms" {
+variable "k3s_servers" {
   type = map(object({
     node_name = string
     vm_id = optional(number, 9000)
     memory = number
     cpu = number
     ip = string
-    disk_size = optional(number, 20)
   }))
 }
 

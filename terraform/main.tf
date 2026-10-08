@@ -1,5 +1,5 @@
-resource "proxmox_virtual_environment_vm" "vms" {
-  for_each = var.vms
+resource "proxmox_virtual_environment_vm" "k3s_server" {
+  for_each = var.k3s_servers
 
   name      = each.key
   node_name = each.value.node_name
@@ -18,15 +18,6 @@ resource "proxmox_virtual_environment_vm" "vms" {
 
   memory {
     dedicated = each.value.memory
-  }
-
-  disk {
-    datastore_id = var.lvm_id
-    #file_id      = proxmox_download_file.debian_cloud_image[each.key].id
-    interface    = "virtio0"
-    iothread     = true
-    discard      = "on"
-    size         = each.value.disk_size
   }
 
   initialization {

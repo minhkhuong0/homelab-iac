@@ -15,17 +15,67 @@
     dest: /tmp/k3s-install.sh
     mode: "0755"
 
-- name: Run install script on first server
+- name: Init K3s cluster on first server
   when:
-    - k3s_server_version_output.rc != 0
     - inventory_hostname == groups["k3s_servers"][0]
-  ansible.builtin.command:
-    argv:
-      - /tmp/k3s-install.sh
-      - -s
-      - "-"
-      - server
-      - --cluster-init
-      - --tls-san="{{ control_lb_ip }}"
-      - --cluster-cidr "{{ cluster_cidr }}"
-      - --node-name "{{ inventory_hostname }}"
+  block:
+    - name: Ensure K3s dir exists
+      ansible.builtin.file:
+        path: /etc/rancher/k3s
+        state: directory
+        mode: '0755'
+        owner: ansible
+      become: true
+    - name: Write K3s init cluster config file
+      ansible.builtin.copy:
+        dest: /etc/rancher/k3s/config.yaml
+        mode: '0755'
+        content: |
+          cluster-init: true
+          node-name: "{{ inventory_hostname }}"
+          cluster-cidr: "{{ cluster_cidr }}"
+          tls-san:
+            - "{{ control_lb_ip }}"
+    - name: Run K3s install script to init cluster
+      ansible.builtin.command: /tmp/k3s-install.sh
+
+    - name: Wait for token
+      ansible.builtin.wait_for:
+        path: /var/lib/rancher/k3s/server/token
+      become: true
+
+    - name: Read token from first server
+      ansible.builtin.slurp:
+        src: /var/lib/rancher/k3s/server/token
+      register: cluster_token_raw
+      become: true
+
+    - name: Store token
+      ansible.builtin.set_fact:
+        cluster_token: "{{ cluster_token_raw.content | b64decode | trim }}"
+      
+- name: Join K3s cluster on other servers
+  when:
+    # - k3s_server_version_output.rc != 0
+    - inventory_hostname != groups["k3s_servers"][0]
+  block:
+    - name: Ensure K3s dir exists
+      ansible.builtin.file:
+        path: /etc/rancher/k3s
+        state: directory
+        mode: '0755'
+        owner: ansible
+      become: true
+    - name: Write K3s init cluster config file
+      ansible.builtin.copy:
+        dest: /etc/rancher/k3s/config.yaml
+        mode: '0755'
+        content: |
+          server: https://{{ hostvars[groups["k3s_servers"][0]].ansible_host }}:6443
+          token: {{ hostvars[groups["k3s_servers"][0]].cluster_token }}
+          node-name: "{{ inventory_hostname }}"
+          cluster-cidr: "{{ cluster_cidr }}"
+          tls-san:
+            - "{{ control_lb_ip }}"
+    - name: Run K3s install script to join cluster
+      ansible.builtin.command: /tmp/k3s-install.sh

@@ -15,17 +15,53 @@
     dest: /tmp/k3s-install.sh
     mode: "0755"
 
-- name: Run install script on first server
+- name: Init cluster on first server
   when:
-    - k3s_server_version_output.rc != 0
     - inventory_hostname == groups["k3s_servers"][0]
+  block:
+    - name: Run install script to init cluster
+      # when:
+      #   k3s_server_version_output.rc != 0
+      ansible.builtin.command:
+        argv:
+          - /tmp/k3s-install.sh
+          - -s
+          - -
+          - server
+          - --cluster-init
+          - --tls-san={{ control_lb_ip }}
+          - --cluster-cidr
+          - "{{ cluster_cidr }}"
+          - --node-name
+          - "{{ inventory_hostname }}"
+
+    - name: Wait for token
+      ansible.builtin.wait_for:
+        path: /var/lib/rancher/k3s/server/token
+      become: true
+
+    - name: Read token from first server
+      ansible.builtin.slurp:
+        src: /var/lib/rancher/k3s/server/token
+      register: cluster_token_raw
+      become: true
+
+    - name: Store token
+      ansible.builtin.set_fact:
+        cluster_token: "{{ cluster_token_raw.content | b64decode | trim }}"
+      
+- name: Run install script on other servers
+  when:
+    # - k3s_server_version_output.rc != 0
+    - inventory_hostname != groups["k3s_servers"][0]
   ansible.builtin.command:
     argv:
       - /tmp/k3s-install.sh
       - -s
-      - "-"
+      - -
       - server
-      - --cluster-init
-      - --tls-san="{{ control_lb_ip }}"
-      - --cluster-cidr "{{ cluster_cidr }}"
-      - --node-name "{{ inventory_hostname }}"
+      - --server https://{{ hostvars[groups["k3s_servers"][0]].ansible_host }}:6443
+      - --tls-san={{ control_lb_ip }}
+      - --cluster-cidr {{ cluster_cidr }}
+      - --node-name {{ inventory_hostname }}
+      - --token {{ hostvars[groups["k3s_servers"][0]].cluster_token }}

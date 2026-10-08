@@ -2,6 +2,7 @@ resource "proxmox_virtual_environment_vm" "k3s_server" {
   for_each = var.k3s_servers
 
   name      = each.key
+  tags = [ "k3s-server" ]
   node_name = each.value.node_name
 
   clone {

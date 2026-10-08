@@ -2,6 +2,7 @@ resource "proxmox_virtual_environment_vm" "debian_template" {
   for_each = var.ve_nodes
 
   name      = "debian-template"
+  tags = [ "terraform", "debian" ]
   node_name = each.key
   vm_id     = each.value
 
@@ -27,7 +28,7 @@ resource "proxmox_virtual_environment_vm" "debian_template" {
 
   disk {
     datastore_id = var.lvm_id
-    file_id      = proxmox_download_file.debian_cloud_image[each.key].id
+    file_id      = proxmox_download_file.debian_cloud_image.id
     interface    = "virtio0"
     iothread     = true
     discard      = "on"
@@ -41,7 +42,7 @@ resource "proxmox_virtual_environment_vm" "debian_template" {
       }
     }
 
-    user_data_file_id = proxmox_virtual_environment_file.user_data_cloud_config[each.key].id
+    user_data_file_id = proxmox_virtual_environment_file.user_data_cloud_config.id
   }
 
   network_device {
@@ -50,27 +51,23 @@ resource "proxmox_virtual_environment_vm" "debian_template" {
 }
 
 resource "proxmox_download_file" "debian_cloud_image" {
-  for_each = var.ve_nodes
-
   content_type = "iso"
   datastore_id = var.storage_id
-  node_name    = each.key
+  node_name    = var.storage_node
 
   url       = "https://ftp5.gwdg.de/pub/linux/debian/debian-cloud-image/cloud/trixie/latest/debian-13-generic-amd64.qcow2"
   file_name = "debian-13-generic-amd64.img"
 }
 
 resource "proxmox_virtual_environment_file" "user_data_cloud_config" {
-  for_each = var.ve_nodes
-  
   content_type = "snippets"
   datastore_id = var.storage_id
-  node_name    = each.key
+  node_name    = var.storage_node
 
   source_raw {
     data = <<-EOF
     #cloud-config
-    hostname: test_debian
+    hostname: debian
     timezone: UTC
     users:
       - default

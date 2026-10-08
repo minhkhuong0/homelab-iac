@@ -12,7 +12,7 @@ variable "lvm_id" {
 variable "storage_id" {
   description = "datastore id for storage"
   type        = string
-  default = "local"
+  default = "tank"
 }
 
 variable "k3s_servers" {
@@ -26,5 +26,11 @@ variable "k3s_servers" {
 }
 
 variable "ve_nodes" {
+  description = "nodes in the proxmox cluster"
   type = map
+}
+variable "storage_node" {
+  description = "node that download and create files"
+  type = string
+  default = "pve2"
 }

@@ -31,6 +31,7 @@
         dest: /etc/rancher/k3s/config.yaml
         mode: '0755'
         content: |
+          write-kubeconfig-mode: "0644"
           cluster-init: true
           node-name: "{{ inventory_hostname }}"
           cluster-cidr: "{{ cluster_cidr }}"
@@ -56,7 +57,6 @@
       
 - name: Join K3s cluster on other servers
   when:
-    # - k3s_server_version_output.rc != 0
     - inventory_hostname != groups["k3s_servers"][0]
   block:
     - name: Ensure K3s dir exists
@@ -71,6 +71,7 @@
         dest: /etc/rancher/k3s/config.yaml
         mode: '0755'
         content: |
+          write-kubeconfig-mode: "0644"
           server: https://{{ control_lb_ip }}:6443
           token: {{ hostvars[groups["k3s_servers"][0]].cluster_token }}
           node-name: "{{ inventory_hostname }}"
@@ -79,3 +80,12 @@
             - "{{ control_lb_ip }}"
     - name: Run K3s install script to join cluster
       ansible.builtin.command: /tmp/k3s-install.sh
+
+- name: Bootstrap Argo CD in K3s cluster
+  when:
+    - inventory_hostname == groups["k3s_servers"][0]
+  block:
+    - name: Create Argo CD namespace
+      ansible.builtin.shell: kubectl create namespace argocd --dry-run=client -o yaml | kubectl apply -f -
+    - name: Apply Argo CD manifest
+      ansible.builtin.command: kubectl apply -n argocd --server-side --force-conflicts -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml

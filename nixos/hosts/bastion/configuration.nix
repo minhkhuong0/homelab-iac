@@ -30,7 +30,7 @@
     hostName = "bastion";
 
     firewall.allowedUDPPorts = [ 53 ];
-    firewall.allowedTCPPorts = [ 80 443 ];
+    firewall.allowedTCPPorts = [ 80 443 6443 ];
 
   };
 

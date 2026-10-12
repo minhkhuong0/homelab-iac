@@ -71,7 +71,7 @@
         dest: /etc/rancher/k3s/config.yaml
         mode: '0755'
         content: |
-          server: https://{{ hostvars[groups["k3s_servers"][0]].ansible_host }}:6443
+          server: https://{{ control_lb_ip }}:6443
           token: {{ hostvars[groups["k3s_servers"][0]].cluster_token }}
           node-name: "{{ inventory_hostname }}"
           cluster-cidr: "{{ cluster_cidr }}"

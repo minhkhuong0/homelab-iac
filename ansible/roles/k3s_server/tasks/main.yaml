@@ -89,3 +89,9 @@
       ansible.builtin.shell: kubectl create namespace argocd --dry-run=client -o yaml | kubectl apply -f -
     - name: Apply Argo CD manifest
       ansible.builtin.command: kubectl apply -n argocd --server-side --force-conflicts -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+    - name: Get application resource manifest for homelab application set
+      ansible.builtin.copy:
+        src: argocd-bootstrap.yaml
+        dest: /tmp/argocd-bootstrap.yaml
+    - name: Apply application resource
+      ansible.builtin.command: kubectl apply -f /tmp/argocd-bootstrap.yaml

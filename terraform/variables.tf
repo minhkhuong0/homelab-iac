@@ -6,31 +6,32 @@ variable "ve_api_token" {
 variable "lvm_id" {
   description = "datastore id for vms"
   type        = string
-  default = "local-lvm"
+  default     = "local-lvm"
 }
 
 variable "storage_id" {
   description = "datastore id for storage"
   type        = string
-  default = "tank"
+  default     = "tank"
 }
 
 variable "k3s_servers" {
   type = map(object({
     node_name = string
-    vm_id = optional(number, 9000)
-    memory = number
-    cpu = number
-    ip = string
+    vm_id     = optional(number, 9000)
+    memory    = number
+    cpu       = number
+    ip        = string
+    disk_size = number
   }))
 }
 
 variable "ve_nodes" {
   description = "nodes in the proxmox cluster"
-  type = map
+  type        = map(any)
 }
 variable "storage_node" {
   description = "node that download and create files"
-  type = string
-  default = "pve2"
+  type        = string
+  default     = "pve2"
 }

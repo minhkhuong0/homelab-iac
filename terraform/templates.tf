@@ -2,7 +2,7 @@ resource "proxmox_virtual_environment_vm" "debian_template" {
   for_each = var.ve_nodes
 
   name      = "debian-template"
-  tags = [ "terraform", "debian" ]
+  tags      = ["terraform", "debian"]
   node_name = each.key
   vm_id     = each.value
 

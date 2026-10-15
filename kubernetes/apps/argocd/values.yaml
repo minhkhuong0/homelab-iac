@@ -1,0 +1,7 @@
+argo-cd:
+  server:
+    service:
+      type: LoadBalancer
+      servicePortHttp: 8081
+      servicePortHttps: 8082
+    insecure: false

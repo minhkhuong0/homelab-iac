@@ -6,17 +6,9 @@ metadata:
 spec:
   project: default
   source:
-    chart: argo-cd
-    repoURL: https://argoproj.github.io/argo-helm
-    targetRevision: 10.10.5
-    helm:
-      values: |
-        server:
-          service:
-            type: LoadBalancer
-            servicePortHttp: 8081
-        extraArgs:
-          - --insecure
+    repoURL: https://github.com/argoproj/argo-cd
+    targetRevision: stable
+    path: manifests/cluster-install
   destination:
     server: https://kubernetes.default.svc
     namespace: argocd
@@ -25,5 +17,4 @@ spec:
       prune: true
       selfHeal: true
     syncOptions:
-      - CreateNamespace=true
       - ServerSideApply=true

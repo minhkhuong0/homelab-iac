@@ -43,6 +43,8 @@
     vim
     opentofu
     ansible
+    kubectl
+    tmux
   ];
 
   programs = {

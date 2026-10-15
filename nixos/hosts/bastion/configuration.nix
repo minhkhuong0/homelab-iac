@@ -2,6 +2,7 @@
   modulesPath,
   lib,
   pkgs,
+  config,
   ...
 }:
 {
@@ -30,7 +31,7 @@
     hostName = "bastion";
 
     firewall.allowedUDPPorts = [ 53 ];
-    firewall.allowedTCPPorts = [ 80 443 6443 ];
+    firewall.allowedTCPPorts = [ 80 443 6443 8006 ];
 
   };
 
@@ -116,6 +117,19 @@
           listen 6443;
           proxy_pass k3s_servers;
         }
+
+        upstream proxmox_servers {
+          server 10.42.0.10:8006;
+          server 10.42.0.11:8006;
+          server 10.42.0.12:8006;
+          server 10.42.0.13:8006;
+          server 10.42.0.14:8006;
+        }
+
+        server {
+          listen 8006;
+          proxy_pass proxmox_servers;
+        }
       '';
 
       virtualHosts."jellyfin.nhmk.de" = {
@@ -134,6 +148,34 @@
         };
       };
     };
+  };
+
+  systemd.services = {
+    pangolin-site = {
+      enable = true;
+      wantedBy = [ "multi-user.target" ];
+      after = [ "network-online.target" ];
+      wants = [ "network-online.target" ];
+
+      serviceConfig = {
+        Type = "simple";
+        User = "root";
+        Group = "root";
+        Restart = "always";
+        RestartSec = 2;
+        UMask = 0077;
+        ExecStart = pkgs.writeShellScript "pangolin-site-start" ''
+          exec ${pkgs.pangolin-cli}/bin/pangolin up site \
+            --id erfcu0rtxmh5ltd \
+            --secret $(cat "${config.age.secrets.pangolin-site.path}") \
+            --endpoint https://pangolin.nhmk.de
+        '';
+      };
+    };
+  };
+
+  age.secrets = {
+    pangolin-site.file = ./secrets/pangolin-site.age;
   };
 
   security.acme = {

@@ -4,6 +4,7 @@
     disko.url = "github:nix-community/disko";
     disko.inputs.nixpkgs.follows = "nixpkgs";
     colmena.url = "github:zhaofengli/colmena";
+    agenix.url = "github:ryantm/agenix";
   };
 
   outputs =
@@ -12,11 +13,10 @@
       nixpkgs,
       disko,
       colmena,
+      agenix,
       ...
     }:
     {
-      # Use this for all other targets
-      # nixos-anywhere --flake .#generic --generate-hardware-config nixos-generate-config ./hardware-configuration.nix <hostname>
       nixosConfigurations.bastion = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
@@ -43,6 +43,7 @@
           imports = [
             disko.nixosModules.disko
             ./hosts/bastion/configuration.nix
+            agenix.nixosModules.default
           ];
         };
 

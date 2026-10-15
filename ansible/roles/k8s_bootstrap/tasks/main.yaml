@@ -1,0 +1,24 @@
+- name: Get kubectl credentials
+  block:
+    - name: Replace IP in fetched credentials
+      ansible.builtin.replace:
+        path: ~/.kube/config
+        regexp: '127\.0\.0\.1'
+        replace: '{{ control_lb_ip }}'
+
+- name: Bootstrap Argo CD in K3s cluster
+  block:
+    - name: Create Argo CD namespace
+      ansible.builtin.shell: kubectl create namespace argocd --dry-run=client -o yaml | kubectl apply -f -
+
+    - name: Get application resource manifest for homelab application set
+      ansible.builtin.copy:
+        src: argocd-bootstrap.yaml
+        dest: /tmp/argocd-bootstrap.yaml
+
+    - name: Apply Argo CD manifest
+      ansible.builtin.command: kubectl apply -n argocd --server-side --force-conflicts -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+
+    - name: Apply application resource
+      ansible.builtin.command: kubectl apply -f /tmp/argocd-bootstrap.yaml
+

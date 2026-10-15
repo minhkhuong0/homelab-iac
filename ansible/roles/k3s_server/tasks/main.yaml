@@ -26,6 +26,7 @@
         mode: '0755'
         owner: ansible
       become: true
+
     - name: Write K3s init cluster config file
       ansible.builtin.copy:
         dest: /etc/rancher/k3s/config.yaml
@@ -37,6 +38,7 @@
           cluster-cidr: "{{ cluster_cidr }}"
           tls-san:
             - "{{ control_lb_ip }}"
+
     - name: Run K3s install script to init cluster
       ansible.builtin.command: /tmp/k3s-install.sh
 
@@ -54,6 +56,12 @@
     - name: Store token
       ansible.builtin.set_fact:
         cluster_token: "{{ cluster_token_raw.content | b64decode | trim }}"
+
+    - name: Fetch credentials
+      ansible.builtin.fetch:
+        src: /etc/rancher/k3s/k3s.yaml
+        dest: ~/.kube/config
+        flat: true
       
 - name: Join K3s cluster on other servers
   when:
@@ -66,6 +74,7 @@
         mode: '0755'
         owner: ansible
       become: true
+
     - name: Write K3s init cluster config file
       ansible.builtin.copy:
         dest: /etc/rancher/k3s/config.yaml
@@ -78,20 +87,6 @@
           cluster-cidr: "{{ cluster_cidr }}"
           tls-san:
             - "{{ control_lb_ip }}"
+
     - name: Run K3s install script to join cluster
       ansible.builtin.command: /tmp/k3s-install.sh
-
-- name: Bootstrap Argo CD in K3s cluster
-  when:
-    - inventory_hostname == groups["k3s_servers"][0]
-  block:
-    - name: Create Argo CD namespace
-      ansible.builtin.shell: kubectl create namespace argocd --dry-run=client -o yaml | kubectl apply -f -
-    - name: Apply Argo CD manifest
-      ansible.builtin.command: kubectl apply -n argocd --server-side --force-conflicts -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
-    - name: Get application resource manifest for homelab application set
-      ansible.builtin.copy:
-        src: argocd-bootstrap.yaml
-        dest: /tmp/argocd-bootstrap.yaml
-    - name: Apply application resource
-      ansible.builtin.command: kubectl apply -f /tmp/argocd-bootstrap.yaml

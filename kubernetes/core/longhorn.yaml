@@ -17,6 +17,8 @@ spec:
           defaultClassReplicaCount: 2
         preUpgradeChecker:
           jobEnabled: false
+        defaultSettings:
+          v2DataEngine: "true"
   destination:
     server: https://kubernetes.default.svc
     namespace: longhorn-system

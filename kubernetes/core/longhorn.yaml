@@ -14,11 +14,10 @@ spec:
     helm:
       values: |
         persistence:
-          defaultClassReplicaCount: 2
+          createStorageClass: false
         preUpgradeChecker:
           jobEnabled: false
-        defaultSettings:
-          v2DataEngine: "true"
+
   destination:
     server: https://kubernetes.default.svc
     namespace: longhorn-system

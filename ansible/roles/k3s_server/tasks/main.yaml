@@ -90,3 +90,13 @@
 
     - name: Run K3s install script to join cluster
       ansible.builtin.command: /tmp/k3s-install.sh
+
+- name: Ensure Longhorn requirements
+  block:
+    - name: Install required packages
+      ansible.builtin.package:
+        name:
+          - nfs-common
+          - open-iscsi
+        state: present
+      become: true

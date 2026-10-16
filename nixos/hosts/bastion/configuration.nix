@@ -32,7 +32,6 @@
 
     firewall.allowedUDPPorts = [ 53 ];
     firewall.allowedTCPPorts = [ 80 443 6443 8006 ];
-
   };
 
   environment.systemPackages = with pkgs; map lib.lowPrio [
@@ -81,7 +80,7 @@
       config = ''
         nhmk.de {
           hosts {
-            10.42.0.2 *.nhmk.de
+            10.42.0.82 *.nhmk.de
             fallthrough nhmk.de
           }
           forward . 9.9.9.9 149.112.112.112
@@ -94,6 +93,9 @@
         }
         livesync.nhmk.de {
           forward . 9.9.9.9 149.112.112.112
+        }
+        jellyfin.nhmk.de {
+          forward . 10.0.42.2
         }
         . {
           forward . 9.9.9.9 149.112.112.112
@@ -142,13 +144,6 @@
         };
       };
 
-      virtualHosts."livesync.nhmk.de" = {
-        enableACME = true;
-        forceSSL = true;
-        locations."/" = {
-          proxyPass = "http://10.42.0.120:5984";
-        };
-      };
     };
   };
 

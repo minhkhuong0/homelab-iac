@@ -1,0 +1,73 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: joplin
+  labels:
+    app: joplin
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: joplin
+      tier: server
+  template:
+    metadata:
+      labels:
+        app: joplin
+        tier: server
+    spec:
+      containers:
+        - name: joplin
+          image: joplin/server:latest
+          ports:
+            - containerPort: 22300
+          env:
+            - name: APP_PORT
+              value: "22300"
+            - name: APP_BASE_URL
+              value: https://joplin.nhmk.de
+            - name: DB_CLIENT
+              value: pg
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-pass
+                  key: password
+            - name: POSTGRES_DB
+              value: joplin
+            - name: POSTGRES_USER
+              value: joplin
+            - name: POSTGRES_HOST
+              value: joplin-postgres
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: joplin
+spec:
+  #type: LoadBalancer
+  selector:
+    app: joplin
+    tier: server
+  ports:
+    - port: 22300
+      targetPort: 22300
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: joplin
+  annotations:
+    traefik.ingress.kubernetes.io/router.entrypoints: web
+spec:
+  rules:
+    - host: joplin.nhmk.de
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: joplin
+                port:
+                  number: 22300

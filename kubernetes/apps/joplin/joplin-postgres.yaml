@@ -1,15 +1,15 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: wordpress-mysql
+  name: joplin-postgres
   labels:
-    app: wordpress
+    app: joplin
 spec:
   ports:
-    - port: 3306
+    - port: 5432
   selector:
-    app: wordpress
-    tier: mysql
+    app: joplin
+    tier: postgres
   clusterIP: None
 ---
 apiVersion: v1
@@ -21,6 +21,7 @@ metadata:
 spec:
   accessModes:
     - ReadWriteOnce
+  storageClassName: longhorn
   resources:
     requests:
       storage: 10Gi
@@ -62,7 +63,7 @@ spec:
           name: mysql
         volumeMounts:
         - name: postgres-persistent-storage
-          mountPath: /var/lib/mysql
+          mountPath: /var/lib/postgres/data
       volumes:
       - name: postgres-persistent-storage
         persistentVolumeClaim:

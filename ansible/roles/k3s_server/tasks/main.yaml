@@ -100,3 +100,34 @@
           - open-iscsi
         state: present
       become: true
+
+    - name: Create ext4 fs on data disk
+      community.general.filesystem:
+        fstype: ext4
+        dev: /dev/vdb
+      become: true
+
+    - name: Ensure mount directory exists
+      ansible.builtin.file:
+        path: /mnt/ssd
+        state: directory
+        mode: '0755'
+        owner: ansible
+      become: true
+
+    - name: Mount data disk
+      ansible.posix.mount:
+        path: /mnt/ssd
+        src: /dev/vdb
+        fstype: ext4
+        opts: defaults
+        state: mounted
+      become: true
+
+    - name: Ensure mount directory exists
+      ansible.builtin.file:
+        path: /mnt/ssd
+        state: directory
+        mode: '0755'
+        owner: ansible
+      become: true

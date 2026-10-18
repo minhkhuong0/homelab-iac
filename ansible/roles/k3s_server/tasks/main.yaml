@@ -38,6 +38,8 @@
           cluster-cidr: "{{ cluster_cidr }}"
           tls-san:
             - "{{ control_lb_ip }}"
+          disable:
+            - servicelb
 
     - name: Run K3s install script to init cluster
       ansible.builtin.command: /tmp/k3s-install.sh
@@ -87,6 +89,8 @@
           cluster-cidr: "{{ cluster_cidr }}"
           tls-san:
             - "{{ control_lb_ip }}"
+          disable:
+            - servicelb
 
     - name: Run K3s install script to join cluster
       ansible.builtin.command: /tmp/k3s-install.sh

@@ -80,7 +80,7 @@
       config = ''
         nhmk.de {
           hosts {
-            10.42.0.82 *.nhmk.de
+            10.42.0.254 *.nhmk.de
             fallthrough nhmk.de
           }
           forward . 9.9.9.9 149.112.112.112

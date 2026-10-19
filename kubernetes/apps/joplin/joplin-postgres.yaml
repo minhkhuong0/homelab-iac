@@ -63,7 +63,7 @@ spec:
           name: mysql
         volumeMounts:
         - name: postgres-persistent-storage
-          mountPath: /var/lib/postgres/data
+          mountPath: /var/lib/postgresql/data
       volumes:
       - name: postgres-persistent-storage
         persistentVolumeClaim:

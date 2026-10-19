@@ -7,8 +7,8 @@
   failed_when: false
 
 - name: Download script
-  when:
-    k3s_server_version_output.rc != 0
+  # when:
+  #   k3s_server_version_output.rc != 0
   ansible.builtin.get_url:
     url: https://get.k3s.io/
     timeout: 120

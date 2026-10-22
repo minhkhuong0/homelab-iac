@@ -1,0 +1,13 @@
+apiVersion: longhorn.io/v1beta2
+kind: Setting
+metadata:
+  name: create-default-disk-labeled-nodes
+  namespace: longhorn-system
+value: "true"
+---
+apiVersion: longhorn.io/v1beta2
+kind: Setting
+metadata:
+  name: storage-reserved-percentage-for-default-disk
+  namespace: longhorn-system
+value: "0"

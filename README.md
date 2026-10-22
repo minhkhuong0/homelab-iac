@@ -10,9 +10,10 @@ My monorepo for my personal fully declarative 5 nodes Kubernetes setup.
 - [x] Longhorn
 - [x] MetalLB
 - [ ] Secret/Vault
-- [ ] ArgoCD phases
+- [x] ArgoCD phases
 - [ ] Certs
-- [ ] Anusbis
+- [ ] Monitoring
+- [ ] Anubis
 - [ ] etcd/Longhorn Backup
 - [ ] A central DB
 - [ ] Testing environment

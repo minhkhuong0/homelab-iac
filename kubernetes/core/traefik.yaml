@@ -8,3 +8,9 @@ spec:
     service:
       annotations:
         metallb.io/loadBalancerIPs: 10.42.0.254
+    additionalArguments:
+      - "--certificatesresolvers.le.acme.email=khuong.nguyen@tutamail.com"
+      - "--certificatesresolvers.le.acme.storage=/data/acme.json"
+      - "--certificatesresolvers.le.acme.caServer=https://acme-staging-v02.api.letsencrypt.org/directory"
+      - "--certificatesresolvers.le.acme.httpchallenge.entrypoint=web"
+      - "--certificatesresolvers.le.acme.httpchallenge=true"

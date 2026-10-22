@@ -11,6 +11,8 @@ My monorepo for my personal fully declarative 5 nodes Kubernetes setup.
 - [x] MetalLB
 - [ ] Secret/Vault
 - [ ] ArgoCD phases
+- [ ] Certs
+- [ ] Anusbis
 - [ ] etcd/Longhorn Backup
 - [ ] A central DB
 - [ ] Testing environment

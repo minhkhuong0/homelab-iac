@@ -16,6 +16,8 @@ kind: Setting
 metadata:
   name: create-default-disk-labeled-nodes
   namespace: longhorn-system
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
 value: "true"
 ---
 apiVersion: longhorn.io/v1beta2
@@ -23,6 +25,8 @@ kind: Setting
 metadata:
   name: storage-reserved-percentage-for-default-disk
   namespace: longhorn-system
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
 value: "0"
 ---
 apiVersion: v1

@@ -22,3 +22,8 @@
     - name: Apply application resource
       ansible.builtin.command: kubectl apply -f /tmp/argocd-bootstrap.yaml
 
+- name: Deploy agekey secret
+  ansible.builtin.shell: |
+    kubectl create secret generic sops-age -n argocd \
+      --from-file=keys.txt=$HOME/.config/sops/age/keys.txt \
+      --dry-run=client -o yaml | kubectl apply -f

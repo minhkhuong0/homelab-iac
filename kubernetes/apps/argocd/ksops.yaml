@@ -19,6 +19,9 @@ spec:
       volumes:
         - name: custom-tools
           emptyDir: {}
+        - name: sops-age
+          secret:
+            secretName: sops-age
       # 2. Use an init container to copy custom binaries into the emptyDir
       initContainers:
         - name: install-ksops
@@ -37,3 +40,10 @@ spec:
             - mountPath: /usr/local/bin/ksops
               name: custom-tools
               subPath: ksops
+            - mountPath: /.config/sops/age
+              name: sops-age
+          env:
+          - name: XDG_CONFIG_HOME
+            value: /.config
+          - name: SOPS_AGE_KEY_FILE
+            value: /.config/sops/age/keys.txt

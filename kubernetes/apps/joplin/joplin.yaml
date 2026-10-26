@@ -25,7 +25,7 @@ spec:
             - name: APP_PORT
               value: "22300"
             - name: APP_BASE_URL
-              value: http://joplin.nhmk.de
+              value: https://joplin.nhmk.de
             - name: DB_CLIENT
               value: pg
             - name: POSTGRES_PASSWORD
@@ -58,7 +58,7 @@ spec:
 apiVersion: traefik.io/v1alpha1
 kind: IngressRoute
 metadata:
-  name: whoami
+  name: joplin
 spec:
   entryPoints:
     - websecure

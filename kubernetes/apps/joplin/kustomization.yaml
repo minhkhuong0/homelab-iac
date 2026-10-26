@@ -4,4 +4,3 @@ secretGenerator:
   - password=testtest123
 resources:
   - joplin.yaml
-  - joplin-postgres.yaml

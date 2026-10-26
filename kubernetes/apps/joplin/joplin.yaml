@@ -31,14 +31,14 @@ spec:
             - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: postgres-pass
+                  name: openbao-secret
                   key: password
             - name: POSTGRES_DB
               value: joplin
             - name: POSTGRES_USER
-              value: joplin
+              value: openbao
             - name: POSTGRES_HOST
-              value: joplin-postgres
+              value: prod-rw.cnpg-system.svc.cluster.local
             - name: POSTGRES_PORT
               value: "5432"
 ---

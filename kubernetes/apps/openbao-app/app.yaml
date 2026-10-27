@@ -16,9 +16,11 @@ spec:
             - envName: BAO_PG_CONNECTION_URL
               secretName: openbao-db-secret
               secretKey: connection_url
+            - envName: UNSEAL_KEY
+              secretName: openbao-unseal-secret
+              secretKey: unseal_key
           ha:
             enabled: true
-            replicas: 2
             config: |
               ui = true
 
@@ -29,6 +31,10 @@ spec:
               }
               storage "postgresql" {
 
+              }
+              seal "static" {
+                current_key_id = "20261027-0"
+                current_key = "env://UNSEAL_KEY"
               }
 
           service:

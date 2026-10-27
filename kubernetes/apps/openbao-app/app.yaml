@@ -11,8 +11,34 @@ spec:
     targetRevision: 0.30.4
     helm:
       values: |
-        valueFiles:
-          - values.yaml
+        server:
+          ha:
+            enabled: true
+            replicas: 2
+            config: |
+              ui = true
+
+              listener "tcp" {
+                tls_disable = 1
+                address = "[::]:8200"
+                cluster_address = "[::]:8201"
+              }
+              storage "pebbledb" {
+                path = "/openbao/data"
+              }
+
+          service:
+            enabled: true
+
+          dataStorage:
+            enabled: true
+            size: 10Gi
+            storageClass: longhorn
+            accessMode: ReadWriteOnce
+
+        ui:
+          enabled: true
+          serviceType: LoadBalancer
   destination:
     server: https://kubernetes.default.svc
     namespace: openbao

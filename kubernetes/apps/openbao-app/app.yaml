@@ -25,7 +25,7 @@ spec:
               ui = true
 
               listener "tcp" {
-                tls_disable = 1
+                tls_disable = 0
                 address = "[::]:8200"
                 cluster_address = "[::]:8201"
               }
@@ -36,6 +36,16 @@ spec:
                 current_key_id = "20261027-0"
                 current_key = "env://UNSEAL_KEY"
               }
+
+              audit "file" "to-stdout" {
+                description = "Write audit information to standard output."
+                options {
+                  file_path = "stdout"
+                  log_raw = "true"
+                }
+              }
+              log_requests_level = "debug"
+              log_level = "debug"
 
           service:
             enabled: true

@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: trust-manager
+  namespace: argocd
+spec:
+  project: default
+  source:
+    chart: trust-manager
+    repoURL: oci://quay.io/jetstack/charts/trust-manager
+    targetRevision: 0.26.0
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: cert-manager
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true

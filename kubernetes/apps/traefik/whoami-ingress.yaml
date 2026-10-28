@@ -1,0 +1,16 @@
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: whoami
+spec:
+  entryPoints:
+    - websecure
+  routes:
+  - kind: Rule
+    match: Host(`whoami.nhmk.de`)
+    services:
+    - name: whoami
+      namespace: whoami
+      port: 80
+  tls:
+    secretName: le-cert

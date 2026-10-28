@@ -11,7 +11,7 @@ metadata:
   name: selfsigned-ca
 spec:
   isCA: true
-  commonName: selfsigned-ca
+  commonName: Selfsigned CA
   secretName: root-secret
   issuerRef:
     name: selfsigned-issuer

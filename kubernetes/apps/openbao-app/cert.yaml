@@ -1,0 +1,19 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: openbao-certificate
+  namespace: openbao
+spec:
+  secretName: openbao-tls
+  duration: 24h
+  renewBefore: 144m
+  dnsNames:
+    - openbao
+    - openbao.openbao
+    - openbao.openbao.svc
+    - openbao.openbao.svc.cluster.local
+  ipAddresses:
+    - 127.0.0.1
+  issuerRef:
+    name: selfsigned-ca-issuer
+    kind: ClusterIssuer

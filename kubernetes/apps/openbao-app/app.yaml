@@ -11,6 +11,8 @@ spec:
     targetRevision: 0.30.4
     helm:
       values: |
+        global:
+          tlsDisable: false
         server:
           extraSecretEnvironmentVars:
             - envName: BAO_PG_CONNECTION_URL
@@ -19,15 +21,28 @@ spec:
             - envName: UNSEAL_KEY
               secretName: openbao-unseal-secret
               secretKey: unseal_key
+          volumes:
+            - name: userconfig-openbao-server-tls
+              secret:
+                defaultMode: 420
+                secretName: openbao-tls
+          volumeMounts:
+            - mountPath: /openbao/userconfig/openbao-server-tls
+              name: userconfig-openbao-server-tls
+              readOnly: true
+          extraEnvironmentVars:
+            BAO_CACERT: /openbao/userconfig/openbao-server-tls/ca.crt
           ha:
             enabled: true
             config: |
               ui = true
 
               listener "tcp" {
-                tls_disable = 0
                 address = "[::]:8200"
                 cluster_address = "[::]:8201"
+                tls_cert_file = "/openbao/userconfig/openbao-server-tls/tls.crt"
+                tls_key_file = "/openbao/userconfig/openbao-server-tls/tls.key"
+                tls_client_ca_file = "/openbao/userconfig/openbao-server-tls/ca.crt"
               }
               storage "postgresql" {
 

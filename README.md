@@ -13,6 +13,8 @@ My monorepo for my personal fully declarative 5 nodes Kubernetes setup.
 - [x] OpenBao (Vault)
 - [x] ArgoCD phases
 - [x] Cloudnative Postgres
+- [x] cert-manager
+- [x] Selfsigned CA and Issuer
 - [ ] Certs
 - [ ] Monitoring
 - [ ] Anubis

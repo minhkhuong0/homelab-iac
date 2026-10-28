@@ -14,10 +14,10 @@ My monorepo for my personal fully declarative 5 nodes Kubernetes setup.
 - [x] ArgoCD phases
 - [x] Cloudnative Postgres
 - [x] cert-manager
-- [x] Selfsigned CA and Issuer
-- [ ] Certs
+- [x] Trusted selfsigned CA and Issuer
+- [x] Certs from Let's encrypt
 - [ ] Monitoring
-- [ ] Anubis
 - [ ] etcd/Longhorn Backup
+- [ ] Offsite backup
 - [ ] Testing environment
 - [ ] HAProxy

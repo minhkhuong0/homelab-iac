@@ -4,13 +4,16 @@ metadata:
   name: prod
 spec:
   instances: 3
-
   bootstrap:
-    initdb:
-      database: openbao
-      owner: openbao
-      secret:
-        name: openbao-secret
+    recovery:
+      source: source
+  externalClusters:
+  - name: source
+    plugin:
+      name: barman-cloud.cloudnative-pg.io
+      parameters:
+        barmanObjectName: garage
+        serverName: prod
   storage:
     storageClass: longhorn-single
     size: 20Gi
@@ -25,3 +28,7 @@ spec:
         login: true
         passwordSecret:
           name: vaultwarden-db
+      - name: openbao
+        login: true
+        passwordSecret:
+          name: openbao-secret

@@ -18,6 +18,6 @@ spec:
   managed:
     roles:
       - name: vaultwarden
-        ensure: present
         login: true
-        passwordSecret: vaultwarden-db
+        passwordSecret:
+          name: vaultwarden-db

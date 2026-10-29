@@ -6,5 +6,6 @@ resources:
   - bootstrap.yaml
   - joplin-db.yaml
   - vaultwarden-db-external-secret.yaml
+  - object-store.yaml
 generators:
   - secret-generator.yaml

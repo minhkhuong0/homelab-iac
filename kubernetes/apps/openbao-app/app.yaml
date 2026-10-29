@@ -35,8 +35,6 @@ spec:
           ha:
             enabled: true
             config: |
-              ui = true
-
               listener "tcp" {
                 address = "[::]:8200"
                 cluster_address = "[::]:8201"
@@ -64,16 +62,11 @@ spec:
 
           service:
             enabled: true
-
+          updateStrategyType: "RollingUpdate"
           dataStorage:
-            enabled: true
-            size: 10Gi
-            storageClass: longhorn
-            accessMode: ReadWriteOnce
-
-        ui:
-          enabled: true
-          serviceType: LoadBalancer
+            enabled: false
+          annotations:
+            reloader.stakater.com/auto: "true"
   destination:
     server: https://kubernetes.default.svc
     namespace: openbao

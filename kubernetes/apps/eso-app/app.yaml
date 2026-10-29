@@ -13,6 +13,8 @@ spec:
       values: |
         log:
           level: debug
+        deploymentAnnotations:
+          reloader.stakater.com/auto: "true"
   destination:
     server: https://kubernetes.default.svc
     namespace: external-secrets

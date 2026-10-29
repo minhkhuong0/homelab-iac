@@ -15,3 +15,9 @@ spec:
   storage:
     storageClass: longhorn-single
     size: 20Gi
+  managed:
+    roles:
+      - name: vaultwarden
+        ensure: present
+        login: true
+        passwordSecret: vaultwarden-db

@@ -19,6 +19,10 @@ spec:
           createStorageClass: false
         preUpgradeChecker:
           jobEnabled: false
+        defaultBackupStore:
+          backupTarget: s3://cnpg-backup@garage/
+          backupTargetCredentialSecret: garage
+          pollInterval: 180
 
   destination:
     server: https://kubernetes.default.svc

@@ -2,6 +2,7 @@ apiVersion: trust.cert-manager.io/v1alpha1
 kind: Bundle
 metadata:
   name: selfsigned-ca
+  namespace: trust-manager
 spec:
   sources:
     - secret:

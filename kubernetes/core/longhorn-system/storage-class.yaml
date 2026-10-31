@@ -12,7 +12,7 @@ parameters:
   recurringJobSelector: |
     [
       {
-        "name": "hourly-backup",
+        "name": "daily-backup",
         "isGroup": false
       }
     ]

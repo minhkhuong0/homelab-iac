@@ -2,6 +2,7 @@ apiVersion: postgresql.cnpg.io/v1
 kind: Database
 metadata:
   name: vaultwarden
+  namespace: cnpg-system
 spec:
   cluster:
     name: prod

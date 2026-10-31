@@ -17,8 +17,9 @@ My monorepo for my personal fully declarative 5 nodes Kubernetes setup.
 - [x] Trusted selfsigned CA and Issuer
 - [x] Certs from Let's encrypt
 - [x] CNPG backup
-- [ ] Longhorn backup
+- [x] Longhorn backup
 - [ ] Monitoring
 - [ ] Offsite backup
+- [ ] Auto upgrades
 - [ ] Testing environment
 - [ ] HAProxy

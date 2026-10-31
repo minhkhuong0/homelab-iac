@@ -9,7 +9,7 @@ terraform {
 }
 
 provider "proxmox" {
-  endpoint  = "https://10.42.0.10:8006/"
+  endpoint  = "https://10.42.0.14:8006/"
   api_token = var.ve_api_token
   insecure  = true
 

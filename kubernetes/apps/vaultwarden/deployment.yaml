@@ -20,12 +20,8 @@ spec:
         env:
         - name: WEBSOCKET_ENABLED
           value: "true"
-        - name: PGHOST
-          value: prod-rw.cnpg-system.svc.cluster.local
-        - name: PGPORT
-          value: "5432"
-        - name: PGDATABASE
-          value: vaultwarden
+        - name: DATABASE_URL
+          value: postgresql://prod-rw.cnpg-system.svc.cluster.local:5432/vaultwarden
         - name: PGUSER
           value: vaultwarden
         - name: PGPASSWORD

@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: homelab
+  name: apps
   namespace: argocd
 spec:
   goTemplate: true
@@ -29,7 +29,6 @@ spec:
       syncPolicy:
         syncOptions:
         - CreateNamespace=true
-        - ServerSideApply=true
         automated:
           prune: true
           selfHeal: true

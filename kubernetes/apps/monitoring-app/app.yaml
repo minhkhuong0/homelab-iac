@@ -10,7 +10,7 @@ spec:
     repoURL: oci://ghcr.io/prometheus-community/charts/kube-prometheus-stack
     targetRevision: 92.17.0
     helm:
-      values:
+      values: |
         prometheusSpec:
           replicas: 2
           podAntiAffinity: hard

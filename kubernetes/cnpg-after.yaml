@@ -3,8 +3,6 @@ kind: Cluster
 metadata:
   name: prod
   namespace: cnpg-system
-  annotations:
-    cnpg.io/skipEmptyWalArchiveCheck: "enabled"
 spec:
   instances: 2
   bootstrap:

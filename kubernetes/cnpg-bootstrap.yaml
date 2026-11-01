@@ -17,3 +17,14 @@ spec:
         serverName: prod
   storage:
     size: 20Gi
+    storageClass: longhorn-single
+  managed:
+    roles:
+      - name: vaultwarden
+        login: true
+        passwordSecret:
+          name: vaultwarden-db
+      - name: openbao
+        login: true
+        passwordSecret:
+          name: openbao-secret

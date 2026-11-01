@@ -1,0 +1,4 @@
+- name: uninstall K3s
+  hosts: k3s_servers
+  tasks:
+    - ansible.builtin.command: /usr/local/bin/k3s-uninstall.sh

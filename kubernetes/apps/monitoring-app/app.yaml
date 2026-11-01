@@ -18,13 +18,21 @@ spec:
             volumeClaimTemplate:
               spec:
                 storageClassName: longhorn
+                accessModes:
+                  - ReadWriteOnce
                 resources:
-                  requests: 20Gi
+                  requests:
+                    storage: 20Gi
         grafana:
-          persistence:
-            enable: true
+         persistence:
+            enabled: true
+            type: sts
             storageClassName: longhorn
+            accessModes:
+              - ReadWriteOnce
             size: 10Gi
+            finalizers:
+              - kubernetes.io/pvc-protection
   destination:
     server: https://kubernetes.default.svc
     namespace: kube-prometheus-stack

@@ -34,6 +34,7 @@ spec:
             BAO_CACERT: /openbao/userconfig/openbao-server-tls/ca.crt
           ha:
             enabled: true
+            replicas: 2
             config: |
               listener "tcp" {
                 address = "[::]:8200"

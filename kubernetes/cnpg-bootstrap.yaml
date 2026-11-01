@@ -15,5 +15,4 @@ spec:
         barmanObjectName: garage
         serverName: prod
   storage:
-    storageClass: longhorn-single
     size: 20Gi

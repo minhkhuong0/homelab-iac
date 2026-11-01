@@ -9,6 +9,10 @@ spec:
     chart: kube-prometheus-stack
     repoURL: oci://ghcr.io/prometheus-community/charts/kube-prometheus-stack
     targetRevision: 92.17.0
+    helm:
+      prometheusSpec:
+        replicas: 2
+        podAntiAffinity: "hard"
   destination:
     server: https://kubernetes.default.svc
     namespace: kube-prometheus-stack

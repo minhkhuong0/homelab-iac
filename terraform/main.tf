@@ -24,8 +24,7 @@ resource "proxmox_virtual_environment_vm" "k3s_server" {
   disk {
     datastore_id = var.lvm_id
     size         = each.value.disk_size
-    file_format  = "raw"
-    interface    = "virtio1"
+    interface    = "virtio0"
     iothread     = true
     discard      = "on"
   }

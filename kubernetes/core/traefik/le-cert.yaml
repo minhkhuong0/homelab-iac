@@ -3,10 +3,10 @@ kind: Certificate
 metadata:
   name: letsencrypt
 spec:
-  secretName: le-cert
+  secretName: le-cert-staging
   dnsNames:
     - "*.nhmk.de"
     - "*.local.nhmk.de"
   issuerRef:
-    name: letsencrypt
+    name: letsencrypt-staging
     kind: Issuer

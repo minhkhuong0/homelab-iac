@@ -1,13 +1,13 @@
 apiVersion: cert-manager.io/v1
 kind: Issuer
 metadata:
-  name: letsencrypt
+  name: letsencrypt-staging
 spec:
   acme:
     email: khuong.nguyen@tutamail.com
-    server: https://acme-v02.api.letsencrypt.org/directory
+    server: https://acme-staging-v02.api.letsencrypt.org/directory
     privateKeySecretRef:
-      name: letsencrypt
+      name: letsencrypt-staging
     solvers:
       - dns01:
           cloudflare:

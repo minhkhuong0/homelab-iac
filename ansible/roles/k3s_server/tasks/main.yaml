@@ -66,8 +66,6 @@
         flat: true
       
 - name: Join K3s cluster on other servers
-  when:
-    - inventory_hostname != groups["k3s_servers"][0]
   block:
     - name: Ensure K3s dir exists
       ansible.builtin.file:
@@ -77,7 +75,7 @@
         owner: ansible
       become: true
 
-    - name: Write K3s init cluster config file
+    - name: Write K3s server join config file
       ansible.builtin.copy:
         dest: /etc/rancher/k3s/config.yaml
         mode: '0755'
@@ -93,6 +91,8 @@
             - servicelb
 
     - name: Run K3s install script to join cluster
+      when:
+        - inventory_hostname != groups["k3s_servers"][0]
       ansible.builtin.command: /tmp/k3s-install.sh
 
 - name: Ensure Longhorn requirements

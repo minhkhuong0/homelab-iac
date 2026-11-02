@@ -17,6 +17,7 @@ spec:
         image: codeberg.org/forgejo/forgejo:17
         ports:
         - containerPort: 3000
+        - containerPort: 22
         env:
           - name: FORGEJO__database__DB_TYPE
             value: postgres

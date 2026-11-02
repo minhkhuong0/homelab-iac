@@ -11,18 +11,19 @@ spec:
     targetRevision: 92.17.0
     helm:
       values: |
-        prometheusSpec:
-          replicas: 2
-          podAntiAffinity: hard
-          storageSpec:
-            volumeClaimTemplate:
-              spec:
-                storageClassName: longhorn
-                accessModes:
-                  - ReadWriteOnce
-                resources:
-                  requests:
-                    storage: 20Gi
+        prometheus:
+          prometheusSpec:
+            replicas: 2
+            podAntiAffinity: hard
+            storageSpec:
+              volumeClaimTemplate:
+                spec:
+                  storageClassName: longhorn
+                  accessModes:
+                    - ReadWriteOnce
+                  resources:
+                    requests:
+                      storage: 10Gi
         grafana:
          persistence:
             enabled: true

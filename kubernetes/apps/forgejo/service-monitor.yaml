@@ -3,7 +3,7 @@ kind: ServiceMonitor
 metadata:
   name: forgejo
   labels:
-    - release: prometheus
+    release: kube-prometheus-stack
 spec:
   selector:
     matchLabels:
@@ -11,6 +11,7 @@ spec:
   endpoints:
   - port: http
     path: /metrics
+    scheme: http
     interval: 15s
     bearerTokenSecret:
       name: forgejo-metrics

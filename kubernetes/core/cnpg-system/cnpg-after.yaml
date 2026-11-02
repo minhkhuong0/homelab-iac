@@ -33,3 +33,7 @@ spec:
         login: true
         passwordSecret:
           name: openbao-secret
+      - name: forgejo
+        login: true
+        passwordSecret:
+          name: forgejo-db

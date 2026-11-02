@@ -18,7 +18,7 @@ My monorepo for my personal fully declarative 5 nodes Kubernetes setup.
 - [x] Certs from Let's encrypt
 - [x] CNPG backup
 - [x] Longhorn backup
-- [ ] Monitoring
+- [x] Monitoring
 - [ ] Offsite backup
 - [ ] Auto upgrades
 - [ ] Testing environment

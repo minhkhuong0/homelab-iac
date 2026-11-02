@@ -28,7 +28,7 @@ spec:
               matchLabels:
                 release: prometheus
         grafana:
-         persistence:
+          persistence:
             enabled: true
             type: sts
             storageClassName: longhorn
@@ -37,6 +37,8 @@ spec:
             size: 10Gi
             finalizers:
               - kubernetes.io/pvc-protection
+          admin:
+            existingSecret: grafana-admin
   destination:
     server: https://kubernetes.default.svc
     namespace: monitoring

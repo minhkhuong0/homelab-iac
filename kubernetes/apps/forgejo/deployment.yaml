@@ -39,6 +39,8 @@ spec:
               secretKeyRef:
                 name: forgejo-metrics
                 key: token
+          - name: FORGEJO__server__LANDING_PAGE
+            value: /khuong
         volumeMounts:
         - name: forgejo-data
           mountPath: /data

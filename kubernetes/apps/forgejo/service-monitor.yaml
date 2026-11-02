@@ -1,0 +1,15 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: forgejo
+spec:
+  selector:
+    matchLabels:
+      app: forgejo
+  endpoints:
+  - port: http
+    path: /metrics
+    interval: 15s
+    bearerTokenSecret:
+      name: forgejo-metrics
+      key: token

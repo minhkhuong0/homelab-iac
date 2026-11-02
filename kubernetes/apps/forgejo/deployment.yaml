@@ -32,6 +32,13 @@ spec:
               secretKeyRef:
                 name: forgejo-db
                 key: password
+          - name: FORGEJO__metrics__ENABLED
+            value: "true"
+          - name: FORGEJO__metrics__TOKEN
+            valueFrom:
+              secretKeyRef:
+                name: forgejo-metrics
+                key: token
         volumeMounts:
         - name: forgejo-data
           mountPath: /data

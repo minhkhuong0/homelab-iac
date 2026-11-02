@@ -26,7 +26,7 @@ spec:
                       storage: 10Gi
             serviceMonitorNamespaceSelector:
               matchLabels:
-                - release: prometheus
+                release: prometheus
         grafana:
          persistence:
             enabled: true

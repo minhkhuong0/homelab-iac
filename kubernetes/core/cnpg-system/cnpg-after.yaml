@@ -37,3 +37,7 @@ spec:
         login: true
         passwordSecret:
           name: forgejo-db
+      - name: joplin
+        login: true
+        passwordSecret:
+          name: joplin-db

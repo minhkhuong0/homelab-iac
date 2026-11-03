@@ -2,8 +2,9 @@ apiVersion: postgresql.cnpg.io/v1
 kind: Database
 metadata:
   name: joplin
+  namespace: cnpg-system
 spec:
   name: joplin
-  owner: openbao
+  owner: joplin
   cluster:
     name: prod

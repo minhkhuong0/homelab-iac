@@ -5,6 +5,7 @@ resources:
   - https://github.com/cloudnative-pg/plugin-barman-cloud/releases/download/v0.15.1/manifest.yaml
   - vaultwarden-db-external-secret.yaml
   - forgejo-db-external-secret.yaml
+  - joplin-db-external-secret.yaml
   - object-store.yaml
   - daily-scheduled-backup.yaml
   - cnpg-after.yaml

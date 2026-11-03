@@ -5,16 +5,14 @@ metadata:
   labels:
     app: joplin
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: joplin
-      tier: server
   template:
     metadata:
       labels:
         app: joplin
-        tier: server
     spec:
       containers:
         - name: joplin
@@ -31,42 +29,13 @@ spec:
             - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: openbao-secret
+                  name: joplin-db
                   key: password
             - name: POSTGRES_DB
               value: joplin
             - name: POSTGRES_USER
-              value: openbao
+              value: joplin
             - name: POSTGRES_HOST
               value: prod-rw.cnpg-system.svc.cluster.local
             - name: POSTGRES_PORT
               value: "5432"
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: joplin
-spec:
-  #type: LoadBalancer
-  selector:
-    app: joplin
-    tier: server
-  ports:
-    - port: 80
-      targetPort: 22300
----
-apiVersion: traefik.io/v1alpha1
-kind: IngressRoute
-metadata:
-  name: joplin
-spec:
-  entryPoints:
-    - websecure
-  routes:
-  - kind: Rule
-    match: Host(`joplin.nhmk.de`)
-    services:
-    - name: joplin
-      port: 80
-  tls:
-    certResolver: le

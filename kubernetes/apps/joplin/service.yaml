@@ -6,7 +6,6 @@ spec:
   #type: LoadBalancer
   selector:
     app: joplin
-    tier: server
   ports:
     - port: 22300
       targetPort: 22300

@@ -4,6 +4,7 @@ metadata:
   name: joplin
   namespace: cnpg-system
 spec:
+  databaseReclaimPolicy: delete
   name: joplin
   owner: joplin
   cluster:

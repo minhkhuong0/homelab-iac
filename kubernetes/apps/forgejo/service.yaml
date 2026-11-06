@@ -11,6 +11,6 @@ spec:
     - port: 3000
       targetPort: 3000
       name: http
-    - port: 22
-      targetPort: 22
+    - port: 2222
+      targetPort: 2222
       name: ssh

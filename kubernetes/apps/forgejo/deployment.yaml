@@ -17,7 +17,7 @@ spec:
         image: codeberg.org/forgejo/forgejo:17
         ports:
         - containerPort: 3000
-        - containerPort: 22
+        - containerPort: 2222
         env:
           - name: FORGEJO__database__DB_TYPE
             value: postgres
@@ -41,6 +41,12 @@ spec:
                 key: token
           - name: FORGEJO__server__LANDING_PAGE
             value: /khuong
+          - name: FORGEJO__server__START_SSH_SERVER
+            value: "true"
+          - name: FORGEJO__server__SSH_PORT
+            value: "2222"
+          - name: FORGEJO__server__SSH_LISTEN_PORT
+            value: "2222"
         volumeMounts:
         - name: forgejo-data
           mountPath: /data

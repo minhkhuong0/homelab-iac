@@ -1,13 +1,13 @@
 apiVersion: traefik.io/v1alpha1
-kind: IngressRoute
+kind: IngressRouteTCP
 metadata:
   name: forgejo-ssh
 spec:
   entryPoints:
-    - ssh
+    - forgejo-ssh
   routes:
   - kind: Rule
-    match: Host(`forge.nhmk.de`)
+    match: HostSNI(`*`)
     services:
     - name: forgejo
-      port: 22
+      port: 2222

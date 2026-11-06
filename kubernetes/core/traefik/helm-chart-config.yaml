@@ -11,3 +11,9 @@ spec:
     providers:
       kubernetesCRD:
         allowCrossNamespace: true
+    ports:
+      forgejo-ssh:
+        port: 2222
+        expose:
+          default: true
+        protocol: TCP

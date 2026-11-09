@@ -41,9 +41,17 @@
     dig
     vim
     opentofu
-    ansible
     kubectl
     tmux
+    awscli2
+    ssm-session-manager-plugin
+    ( python314.withPackages (ps: with ps; [
+      ansible
+      ansible-core
+      botocore
+      boto3
+      awscrt
+    ]))
   ];
 
   programs = {

@@ -11,5 +11,3 @@ spec:
     services:
     - name: joplin
       port: 22300
-  tls:
-    certResolver: le

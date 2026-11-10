@@ -47,6 +47,8 @@ spec:
             value: "2222"
           - name: FORGEJO__server__SSH_LISTEN_PORT
             value: "2222"
+          - name: FORGEJO__webhook__ALLOWED_HOST_LIST
+            value: "10.43.0.0/16, *.nhmk.de"
         volumeMounts:
         - name: forgejo-data
           mountPath: /data

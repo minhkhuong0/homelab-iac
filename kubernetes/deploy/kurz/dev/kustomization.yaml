@@ -8,4 +8,4 @@ patches:
 images:
   - name: kurz
     newName: forge.nhmk.de/khuong/kurz
-    newTag: "7d0675b3096040e14149df46e992aff24237607b"
+    newTag: eed83b68e95487720cdc045fbf4d8f36251dd2be

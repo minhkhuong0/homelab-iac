@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: kurz
+spec:
+  selector:
+    app: kurz
+  ports:
+    - port: 4392
+      targetPort: 4392

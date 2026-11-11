@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kurz
+  labels:
+    app: kurz
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kurz
+  template:
+    metadata:
+      labels:
+        app: kurz
+    spec:
+      containers:
+        - name: kurz
+          image: kurz
+          ports:
+            - containerPort: 4392

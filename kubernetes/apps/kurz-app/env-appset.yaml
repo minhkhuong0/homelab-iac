@@ -23,7 +23,7 @@ spec:
         path: 'kubernetes/deploy/kurz/{{.env}}'
       destination:
         server: https://kubernetes.default.svc
-        namespace: '{{.path.basename}}-kurz'
+        namespace: '{{.env}}-kurz'
       syncPolicy:
         syncOptions:
         - CreateNamespace=true

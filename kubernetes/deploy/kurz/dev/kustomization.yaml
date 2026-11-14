@@ -1,6 +1,5 @@
 resources:
   - ../base
-namePrefix: dev-
 patches:
   - path: change_host.yaml
     target:
@@ -8,4 +7,4 @@ patches:
 images:
   - name: kurz
     newName: forge.nhmk.de/khuong/kurz
-    newTag: db554d869f55746515ef807fd144b33dea6e0db8
+    newTag: 63161e00c1cd28ad0de42a91757a95a052ec19a2

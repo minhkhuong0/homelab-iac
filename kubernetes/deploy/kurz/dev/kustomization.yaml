@@ -1,10 +1,12 @@
 resources:
   - ../base
+  - postgres.yaml
 patches:
   - path: change_host.yaml
     target:
       kind: IngressRoute
+  - path: change_args.yaml
 images:
   - name: kurz
     newName: forge.nhmk.de/khuong/kurz
-    newTag: 63161e00c1cd28ad0de42a91757a95a052ec19a2
+    newTag: 1709abb5b9cfb51d1019bb4a625bb526671fa349

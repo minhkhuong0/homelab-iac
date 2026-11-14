@@ -1,6 +1,3 @@
 - op: replace
   path: /spec/routes/0/match
   value: Host(`dev-kurz.nhmk.de`)
-- op: replace
-  path: /spec/routes/0/services/0/name
-  value: dev-kurz

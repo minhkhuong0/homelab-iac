@@ -7,4 +7,4 @@ patches:
 images:
   - name: kurz
     newName: forge.nhmk.de/khuong/kurz
-    newTag: v0.0.3
+    newTag: null

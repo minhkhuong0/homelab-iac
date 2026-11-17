@@ -41,3 +41,7 @@ spec:
         login: true
         passwordSecret:
           name: joplin-db
+      - name: kurz
+        login: true
+        passwordSecret:
+          name: kurz-db

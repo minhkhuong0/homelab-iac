@@ -14,4 +14,4 @@ spec:
                   name: kurz-db
                   key: password
             - name: POSTGRESQL_URL
-              value: "postgres://kurz:${PGPASSWORD}@prod-rw.cnpg-system.svc.cluster.local:5432/kurz"
+              value: "postgres://kurz:$(PGPASSWORD)@prod-rw.cnpg-system.svc.cluster.local:5432/kurz"

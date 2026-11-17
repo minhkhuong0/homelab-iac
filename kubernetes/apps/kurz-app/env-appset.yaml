@@ -10,6 +10,7 @@ spec:
     - list:
         elements:
           - env: dev
+          - env: prod
   template:
     metadata:
       name: '{{.env}}-kurz'

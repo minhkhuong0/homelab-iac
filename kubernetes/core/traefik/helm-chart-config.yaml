@@ -5,6 +5,8 @@ metadata:
   namespace: kube-system
 spec:
   valuesContent: |-
+    deployment:
+      replicas: 2
     service:
       annotations:
         metallb.io/loadBalancerIPs: 10.42.0.254

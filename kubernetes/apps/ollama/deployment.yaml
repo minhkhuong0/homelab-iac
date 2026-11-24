@@ -12,6 +12,8 @@ spec:
       labels:
         app: ollama
     spec:
+      nodeSelector:
+        kubernetes.io/hostname: k3s-server-0
       containers:
       - name: ollama
         image: ollama/ollama:latest
@@ -20,7 +22,20 @@ spec:
         volumeMounts:
         - name: ollama-storage
           mountPath: /root/.ollama
+        - name: dri
+          mountPath: /dev/dri
+        env:
+        - name: OLLAMA_VULKAN
+          value: "1"
+        - name: OLLAMA_IGPU_ENABLE
+          value: "1"
+        securityContext:
+          privileged: true
       volumes:
       - name: ollama-storage
         persistentVolumeClaim:
           claimName: ollama-storage
+      - name: dri
+        hostPath:
+          path: /dev/dri
+          type: Directory

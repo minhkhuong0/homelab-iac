@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: agentgateway-crds-helm
+  name: agentgateway-crds
   namespace: argocd
 spec:
   destination:

@@ -1,7 +1,7 @@
 apiVersion: agentgateway.dev/v1alpha1
 kind: AgentgatewayModel
 metadata:
-  name: openai
+  name: nvidia
 spec:
   parentRefs:
   - group: gateway.networking.k8s.io
@@ -9,12 +9,13 @@ spec:
     name: agentgateway-proxy
     sectionName: http
   match:
-    model: "openai/*"
+    model: "nvidia/*"
   provider: OpenAI
+  baseURL: https://integrate.api.nvidia.com/v1
   policies:
     auth:
       secretRef:
-        name: openai-token
+        name: nvidia-token
     transformations:
     - field: model
-      expression: 'llmRequest.model.stripPrefix("openai/")'
+      expression: 'llmRequest.model.stripPrefix("nvidia/")'

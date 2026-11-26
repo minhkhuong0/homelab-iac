@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: agentgateway-crds-helm
+  namespace: argocd
+spec:
+  destination:
+    namespace: agentgateway-system
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    chart: agentgateway-crds
+    repoURL: cr.agentgateway.dev/charts
+    targetRevision: v1.7.0
+  syncPolicy:
+    automated:
+      prune: true 
+      selfHeal: true 
+    syncOptions:
+    - CreateNamespace=true 

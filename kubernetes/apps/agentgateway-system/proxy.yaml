@@ -11,3 +11,6 @@ spec:
     allowedRoutes:
       namespaces:
         from: All
+      kinds:
+      - group: agentgateway.dev
+        kind: AgentgatewayModel

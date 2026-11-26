@@ -2,7 +2,6 @@ apiVersion: agentgateway.dev/v1alpha1
 kind: AgentgatewayModel
 metadata:
   name: openai
-  namespace: agentgateway-system
 spec:
   parentRefs:
   - group: gateway.networking.k8s.io

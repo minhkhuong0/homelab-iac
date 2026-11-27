@@ -1,0 +1,45 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: librechat
+  namespace: argocd
+spec:
+  project: default
+  source:
+    chart: librechat
+    repoURL: ghcr.io/librechat-ai/librechat-chart
+    targetRevision: 3.2.1
+    helm:
+      values: |
+        librechat:
+          imageVolume:
+            size: 5G
+            storageClassName: longhorn
+        mongodb:
+          persistence:
+            enabled: true
+            size: 8Gi
+            storageClass: longhorn
+        meilisearch:
+          persistence:
+            enabled: true
+            size: 5Gi
+            storageClass: longhorn
+        ingress:
+          annotations:
+            traefik.ingress.kubernetes.io/router.entrypoints: websecure
+          hosts:
+            - host: chat.nhmk.de
+              paths:
+                - path: /
+                  pathType: ImplementationSpecific
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: librechat
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

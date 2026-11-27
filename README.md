@@ -19,7 +19,8 @@ My monorepo for my personal fully declarative 5 nodes Kubernetes setup.
 - [x] CNPG backup
 - [x] Longhorn backup
 - [x] Monitoring
-- [ ] Offsite backup
+- [x] LLM Gateway with agentgateway
+- [ ] GatewayAPI for traefik
 - [ ] Auto upgrades
 - [ ] Testing environment
 - [ ] HAProxy

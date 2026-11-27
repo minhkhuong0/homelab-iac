@@ -12,10 +12,18 @@ spec:
     helm:
       values: |
         librechat:
-          adminPanelUrl: "https://chat.nhmk.de/admin"
           imageVolume:
             size: 5G
             storageClassName: longhorn
+          configYamlContent: |
+            endpoints:
+              custom:
+                - name: agentgateway
+                  baseURL: "http://agentgateway-proxy.agentgateway-system.svc.cluster.local/v1"
+                  models:
+                    default:
+                      - nvidia/z-ai/glm-5.3-flash
+                      - nvidia/moonshotai/kimi-k3.1-pro
         mongodb:
           persistence:
             enabled: true

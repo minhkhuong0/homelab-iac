@@ -21,6 +21,8 @@ spec:
             enabled: true
             size: 8Gi
             storageClass: longhorn
+          auth:
+            enabled: false
         meilisearch:
           persistence:
             enabled: true

@@ -16,14 +16,20 @@ spec:
             size: 5G
             storageClassName: longhorn
           configYamlContent: |
+            version: 1.3.19
+            cache: true
             endpoints:
               custom:
                 - name: agentgateway
                   baseURL: "http://agentgateway-proxy.agentgateway-system.svc.cluster.local/v1"
+                  apiKey: "dummy"
                   models:
                     default:
                       - nvidia/z-ai/glm-5.3-flash
                       - nvidia/moonshotai/kimi-k3.1-pro
+                    fetch: false
+                  titleConvo: true
+                  titleModel: 'current_model'
         mongodb:
           persistence:
             enabled: true

@@ -12,6 +12,7 @@ spec:
     helm:
       values: |
         librechat:
+          adminPanelUrl: "https://chat.nhmk.de/admin"
           imageVolume:
             size: 5G
             storageClassName: longhorn

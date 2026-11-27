@@ -27,6 +27,7 @@ spec:
                     default:
                       - nvidia/z-ai/glm-5.3-flash
                       - nvidia/moonshotai/kimi-k3.1-pro
+                      - ollama/qwen3.5:9b
                     fetch: false
                   titleConvo: true
                   titleModel: 'current_model'
